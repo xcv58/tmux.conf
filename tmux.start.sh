@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export PATH=$PATH:/usr/local/bin
 
 # abort if we're already inside a TMUX session
