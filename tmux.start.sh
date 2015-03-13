@@ -26,7 +26,7 @@ PS3="Please choose your session: "
 options=($(tmux list-sessions -F "#S") "NEW SESSION" "zsh")
 
 if [[ $# > 0 ]]; then
-    contains ${*} && connect ${opt} || connect ${options[0]}
+    contains ${*} && connect ${*} || connect ${options[0]}
     exit
 fi
 
