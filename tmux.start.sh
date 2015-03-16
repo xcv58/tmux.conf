@@ -8,7 +8,8 @@ export PATH=$PATH:/usr/local/bin
 tmux has-session -t _default || tmux new-session -s _default -d
 
 connect() {
-    tmux attach-session -t ${@}
+    tmux attach-session -t "${@//-/ }"
+    exit
 }
 
 contains() {
@@ -21,14 +22,19 @@ contains() {
     return 1
 }
 
-# present menu for user to choose which workspace to open
-PS3="Please choose your session: "
-options=($(tmux list-sessions -F "#S") "NEW SESSION" "zsh")
-
+options=($(tmux list-sessions -F "#S" | sed -e "s/ /-/g"))
 if [[ $# > 0 ]]; then
-    contains ${*} && connect ${*} || connect ${options[0]}
+    argument=$(echo ${*})
+    argument=${argument// /-}
+    contains ${argument} && connect ${argument} || echo ${argument}
+            contains ${options[$argument]} && connect ${options[$argument]} || connect ${options[0]}
     exit
 fi
+
+# present menu for user to choose which workspace to open
+PS3="Please choose your session: "
+
+options+=("NEW SESSION" "zsh")
 
 echo "Available sessions"
 echo "------------------"
@@ -39,15 +45,12 @@ do
         "NEW SESSION")
             read -p "Enter new session name: " SESSION_NAME
             tmux new -s "$SESSION_NAME"
-            break
-            ;;
+            break;;
         "zsh")
             zsh --login
             break;;
         *)
-            contains ${opt} &&
-                connect ${opt} || connect ${options[0]}
-            break
-            ;;
+            contains ${opt} && connect ${opt} || connect ${options[0]}
+            break;;
     esac
 done
