@@ -2,6 +2,7 @@
 unamestr=`uname`
 if [ "$unamestr" = 'Darwin' ]; then
     lnCommand="ln -hf"
+    command -v reattach-to-user-namespace >/dev/null 2>&1 || brew install reattach-to-user-namespace
 else
     lnCommand="ln -Pf"
 fi
