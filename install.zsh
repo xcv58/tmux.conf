@@ -22,6 +22,4 @@ link_command="ln -sf ${PWD}/tmux.start.sh /usr/local/bin/t"
 echo ${link_command}
 eval ${link_command}
 
-link_command="ln ${PWD}/tmux ${HOME}/.tmux"
-echo ${link_command}
-eval ${link_command}
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
