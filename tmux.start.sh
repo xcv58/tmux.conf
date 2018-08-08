@@ -44,7 +44,13 @@ do
     case ${opt} in
         "NEW SESSION")
             read -p "Enter new session name: " SESSION_NAME
-            tmux new -s "$SESSION_NAME"
+            tmux new -s "$SESSION_NAME" -d
+            tmux split-window -v
+            tmux neww
+            tmux split-window -v
+            tmux select-window -t 1
+            tmux select-pane -t 1
+            tmux attach-session -t "$SESSION_NAME"
             break;;
         "zsh")
             zsh --login
