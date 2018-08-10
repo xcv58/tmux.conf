@@ -30,7 +30,7 @@ contains() {
 
 connect_or_default() {
   # shellcheck disable=SC2015
-  contains "$1" && connect "$1" || connect "${options[-1]}"
+  contains "$1" && connect "$1" || connect "${options[0]}"
 }
 
 DEFAULT=_default
