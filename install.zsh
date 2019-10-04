@@ -6,7 +6,7 @@ cd ${SCRIPT_PATH}
 
 unamestr=`uname`
 if [ "$unamestr" = 'Darwin' ]; then
-    lnCommand="ln -hf"
+    lnCommand="ln -sf"
     command -v reattach-to-user-namespace >/dev/null 2>&1 || brew install reattach-to-user-namespace
 else
     lnCommand="ln -Pf"
