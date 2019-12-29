@@ -14,7 +14,7 @@ create() {
 }
 
 connect() {
-  tmux attach-session -t "${@//-/ }"
+  tmux attach-session -t "${@}"
   exit
 }
 
@@ -38,7 +38,9 @@ DEFAULT=_default
 tmux has-session -t "$DEFAULT" || create "$DEFAULT"
 
 # shellcheck disable=SC2046
-read -r -a options <<< $(tmux list-sessions -F '#S' | sed -e 's/ /-/g')
+IFS=$'\n'
+options=($(tmux list-sessions -F '#S'))
+unset IFS
 if [[ $# -gt 0 ]]; then
   argument="${*}"
   argument=${argument// /-}
